@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Equipment Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <main class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">Equipment Dashboard</p>
+        <h1>Overzicht van al je materiaal</h1>
+        <p>
+          Voeg apparatuur toe, bekijk direct de status en werk reserveringen,
+          uitleningen en locaties bij.
+        </p>
+        <p id="sync-status" class="sync-status"></p>
+      </header>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Vaste locaties</h2>
+          <p>Deze locaties kan je daarna kiezen bij elk product.</p>
+        </div>
+        <form id="location-form" class="inline-form">
+          <input
+            id="location-input"
+            type="text"
+            placeholder="Bijv. Studio A"
+            required
+          />
+          <button type="submit">Locatie toevoegen</button>
+        </form>
+        <div id="locations-list" class="chips"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Nieuw equipment</h2>
+          <p>Voeg camera's, laptops en ander materiaal toe.</p>
+        </div>
+        <form id="equipment-form" class="equipment-form">
+          <label>
+            Naam
+            <input id="name" type="text" placeholder="Bijv. Sony FX3" required />
+          </label>
+          <label>
+            Type
+            <input
+              id="category"
+              type="text"
+              placeholder="Bijv. Camera"
+              required
+            />
+          </label>
+          <label>
+            Foto URL
+            <input
+              id="image"
+              type="url"
+              placeholder="https://..."
+              required
+            />
+          </label>
+          <label>
+            Startlocatie
+            <select id="start-location"></select>
+          </label>
+          <button type="submit">Equipment opslaan</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Equipment overzicht</h2>
+          <p>Klik op een kaart om naar de productpagina te gaan.</p>
+        </div>
+        <div id="equipment-grid" class="grid"></div>
+      </section>
+    </main>
+
+    <template id="equipment-card-template">
+      <article class="card">
+        <img alt="equipment foto" />
+        <div class="card-content">
+          <p class="card-type"></p>
+          <h3></h3>
+          <div class="meta-row">
+            <span class="badge"></span>
+            <span class="location"></span>
+          </div>
+          <p class="borrow-state"></p>
+        </div>
+      </article>
+    </template>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

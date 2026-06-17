@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <main class="app-shell">
+      <section class="panel detail-wrap" id="detail-card">
+        <a class="back-link" href="index.html">Terug naar overzicht</a>
+
+        <div id="not-found" class="hidden">
+          <h1>Product niet gevonden</h1>
+          <p>Controleer de URL of ga terug naar het overzicht.</p>
+        </div>
+
+        <div id="detail-content" class="hidden">
+          <header class="detail-head">
+            <div>
+              <p class="eyebrow">Product URL</p>
+              <h1 id="detail-name"></h1>
+              <p id="detail-meta"></p>
+            </div>
+            <span class="badge" id="detail-status"></span>
+          </header>
+
+          <div class="detail-grid">
+            <img id="detail-image" alt="product foto" />
+
+            <div class="detail-controls">
+              <label>
+                Actie
+                <select id="detail-action">
+                  <option value="none">Alleen locatie updaten</option>
+                  <option value="reserve">Reserveren</option>
+                  <option value="lend">Nu lenen</option>
+                  <option value="return">Terugbrengen</option>
+                </select>
+              </label>
+
+              <label>
+                Locatie
+                <select id="detail-location"></select>
+              </label>
+
+              <p class="selection" id="detail-selection">Nog geen statuswijziging gekozen.</p>
+
+              <button id="save-detail" type="button">Status opslaan</button>
+              <p class="url-text">Directe productlink: <span id="product-url"></span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="product.js"></script>
+  </body>
+</html>
