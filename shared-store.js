@@ -196,6 +196,7 @@ function normalizeReservations(value) {
   return value
     .filter((item) => item && typeof item === "object")
     .map((item) => ({
+      id: typeof item.id === "string" ? item.id : crypto.randomUUID(),
       name: typeof item.name === "string" ? item.name : "",
       startDate: typeof item.startDate === "string" ? item.startDate : "",
       endDate: typeof item.endDate === "string" ? item.endDate : ""

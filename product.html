@@ -59,17 +59,24 @@
                 <select id="detail-location"></select>
               </label>
 
-              <div class="reservation-grid">
-                <label>
-                  Reservering van
-                  <input id="detail-start-date" type="date" />
-                </label>
+              <section class="calendar-panel">
+                <div class="calendar-head">
+                  <button type="button" id="calendar-prev" class="calendar-nav">Vorige</button>
+                  <div>
+                    <h2>Visuele agenda</h2>
+                    <p id="calendar-label"></p>
+                  </div>
+                  <button type="button" id="calendar-next" class="calendar-nav">Volgende</button>
+                </div>
 
-                <label>
-                  Reservering t/m
-                  <input id="detail-end-date" type="date" />
-                </label>
-              </div>
+                <div class="calendar-legend">
+                  <span><i class="legend free"></i> Vrij</span>
+                  <span><i class="legend reserved"></i> Gereserveerd</span>
+                  <span><i class="legend selected"></i> Geselecteerd</span>
+                </div>
+
+                <div id="calendar-grid" class="calendar-grid"></div>
+              </section>
 
               <p class="selection" id="detail-selection">Nog geen statuswijziging gekozen.</p>
 

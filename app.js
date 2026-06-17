@@ -155,7 +155,7 @@ function renderGrid() {
       ? `Lener: ${equipment.borrowerName}`
       : "Nog niemand leent dit product";
     const reservationText = equipment.reservations.length
-      ? `Volgende reservering: ${equipment.reservations[0].startDate} t/m ${equipment.reservations[0].endDate}`
+      ? `Reserveringen: ${equipment.reservations.length} | Eerstvolgende: ${equipment.reservations[0].startDate} t/m ${equipment.reservations[0].endDate}`
       : "Geen reserveringen ingepland";
 
     card.querySelector(".borrow-state").textContent = `${borrowerText} • ${reservationText}`;

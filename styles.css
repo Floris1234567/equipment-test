@@ -381,6 +381,135 @@ button:hover {
   gap: 0.8rem;
 }
 
+.calendar-panel {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffef8;
+  padding: 0.85rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.calendar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.calendar-head h2 {
+  font-size: 1rem;
+}
+
+.calendar-head p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+}
+
+.calendar-nav {
+  background: #194f4a;
+  padding: 0.55rem 0.8rem;
+}
+
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.calendar-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend {
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 999px;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.legend.free {
+  background: #f5f3ed;
+}
+
+.legend.reserved {
+  background: #fef3c7;
+}
+
+.legend.selected {
+  background: #d1fae5;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.calendar-weekday {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  padding-bottom: 0.2rem;
+}
+
+.calendar-day {
+  min-height: 74px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #f5f3ed;
+  color: var(--ink);
+  padding: 0.5rem;
+  display: grid;
+  gap: 0.2rem;
+  justify-items: start;
+  align-content: start;
+}
+
+.calendar-day:hover {
+  transform: none;
+  opacity: 1;
+}
+
+.calendar-day.out-month {
+  opacity: 0.35;
+}
+
+.calendar-day.free {
+  background: #f9faf7;
+}
+
+.calendar-day.reserved {
+  background: #fef3c7;
+}
+
+.calendar-day.selected-range {
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+.calendar-day.selected-start,
+.calendar-day.selected-end {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.day-number {
+  font-weight: 700;
+}
+
+.day-note {
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.1;
+}
+
 .reservation-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(140px, 1fr));
@@ -407,6 +536,13 @@ button:hover {
   background: #fffef8;
   border-radius: 12px;
   padding: 0.65rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.reservation-item div {
   display: grid;
   gap: 0.2rem;
 }
@@ -415,6 +551,12 @@ button:hover {
 .reservation-empty {
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.reservation-delete {
+  background: #8a2f2f;
+  padding: 0.45rem 0.7rem;
+  flex-shrink: 0;
 }
 
 .detail-controls label {
@@ -454,5 +596,23 @@ button:hover {
 
   .reservation-grid {
     grid-template-columns: 1fr;
+  }
+
+  .calendar-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .calendar-grid {
+    gap: 0.3rem;
+  }
+
+  .calendar-day {
+    min-height: 64px;
+    padding: 0.45rem;
+  }
+
+  .reservation-item {
+    flex-direction: column;
   }
 }
