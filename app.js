@@ -151,8 +151,14 @@ function renderGrid() {
     badge.classList.add(equipment.status);
 
     card.querySelector(".location").textContent = `Locatie: ${equipment.location}`;
-    card.querySelector(".borrow-state").textContent =
-      equipment.status === "beschikbaar" ? "Beschikbaar om te lenen" : "Nu niet direct beschikbaar";
+    const borrowerText = equipment.borrowerName
+      ? `Lener: ${equipment.borrowerName}`
+      : "Nog niemand leent dit product";
+    const reservationText = equipment.reservations.length
+      ? `Volgende reservering: ${equipment.reservations[0].startDate} t/m ${equipment.reservations[0].endDate}`
+      : "Geen reserveringen ingepland";
+
+    card.querySelector(".borrow-state").textContent = `${borrowerText} • ${reservationText}`;
 
     refs.grid.appendChild(card);
   });

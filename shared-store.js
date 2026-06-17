@@ -23,6 +23,8 @@ const defaultData = {
         "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=1200&q=80",
       location: "Studio A",
       status: "beschikbaar",
+      borrowerName: "",
+      reservations: [],
       updatedAt: new Date().toISOString()
     },
     {
@@ -33,6 +35,8 @@ const defaultData = {
         "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=80",
       location: "Magazijn",
       status: "gereserveerd",
+      borrowerName: "",
+      reservations: [],
       updatedAt: new Date().toISOString()
     }
   ]
@@ -118,6 +122,12 @@ export async function updateEquipment(id, updates) {
     if (typeof updates.status === "string") {
       equipment.status = updates.status;
     }
+    if (typeof updates.borrowerName === "string") {
+      equipment.borrowerName = updates.borrowerName;
+    }
+    if (Array.isArray(updates.reservations)) {
+      equipment.reservations = updates.reservations;
+    }
 
     equipment.updatedAt = new Date().toISOString();
   });
@@ -161,6 +171,8 @@ function sanitizeState(raw) {
               ? item.location
               : locations[0],
           status: normalizeStatus(item.status),
+          borrowerName: typeof item.borrowerName === "string" ? item.borrowerName : "",
+          reservations: normalizeReservations(item.reservations),
           updatedAt:
             typeof item.updatedAt === "string" ? item.updatedAt : new Date().toISOString()
         }))
@@ -174,6 +186,21 @@ function normalizeStatus(value) {
     return value;
   }
   return "beschikbaar";
+}
+
+function normalizeReservations(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .filter((item) => item && typeof item === "object")
+    .map((item) => ({
+      name: typeof item.name === "string" ? item.name : "",
+      startDate: typeof item.startDate === "string" ? item.startDate : "",
+      endDate: typeof item.endDate === "string" ? item.endDate : ""
+    }))
+    .filter((item) => item.startDate && item.endDate);
 }
 
 function loadLocalState() {

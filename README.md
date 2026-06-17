@@ -12,6 +12,8 @@ Dit is een statische HTML/CSS/JavaScript app voor equipment management.
   - nu te lenen
   - terug te brengen
   - alleen locatie te updaten
+- Bij lenen en reserveren vul je ook een naam in, zodat het overzicht toont wie het product heeft of reserveert
+- Reserveringen gebruik je met een start- en einddatum via de datumvelden op de productpagina
 - Locatie kiezen uit vaste locaties die je zelf toevoegt
 - Data blijft bewaard in `localStorage`
 

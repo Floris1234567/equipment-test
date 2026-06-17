@@ -381,6 +381,42 @@ button:hover {
   gap: 0.8rem;
 }
 
+.reservation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 0.65rem;
+}
+
+.reservation-panel {
+  border-top: 1px solid var(--line);
+  padding-top: 0.8rem;
+}
+
+.reservation-panel h2 {
+  font-size: 1rem;
+  margin-bottom: 0.65rem;
+}
+
+.reservation-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.reservation-item {
+  border: 1px solid var(--line);
+  background: #fffef8;
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.reservation-item span,
+.reservation-empty {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .detail-controls label {
   display: grid;
   gap: 0.4rem;
@@ -413,6 +449,10 @@ button:hover {
   }
 
   .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reservation-grid {
     grid-template-columns: 1fr;
   }
 }

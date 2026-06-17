@@ -40,6 +40,11 @@
 
             <div class="detail-controls">
               <label>
+                Naam gebruiker
+                <input id="detail-borrower" type="text" placeholder="Wie leent dit product?" />
+              </label>
+
+              <label>
                 Actie
                 <select id="detail-action">
                   <option value="none">Alleen locatie updaten</option>
@@ -54,10 +59,27 @@
                 <select id="detail-location"></select>
               </label>
 
+              <div class="reservation-grid">
+                <label>
+                  Reservering van
+                  <input id="detail-start-date" type="date" />
+                </label>
+
+                <label>
+                  Reservering t/m
+                  <input id="detail-end-date" type="date" />
+                </label>
+              </div>
+
               <p class="selection" id="detail-selection">Nog geen statuswijziging gekozen.</p>
 
               <button id="save-detail" type="button">Status opslaan</button>
               <p class="url-text">Directe productlink: <span id="product-url"></span></p>
+
+              <section class="reservation-panel">
+                <h2>Reserveringen</h2>
+                <div id="reservation-list" class="reservation-list"></div>
+              </section>
             </div>
           </div>
         </div>

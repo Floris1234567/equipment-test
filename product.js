@@ -10,11 +10,15 @@ const refs = {
   meta: document.querySelector("#detail-meta"),
   statusBadge: document.querySelector("#detail-status"),
   image: document.querySelector("#detail-image"),
+  borrower: document.querySelector("#detail-borrower"),
   action: document.querySelector("#detail-action"),
   location: document.querySelector("#detail-location"),
+  startDate: document.querySelector("#detail-start-date"),
+  endDate: document.querySelector("#detail-end-date"),
   selection: document.querySelector("#detail-selection"),
   save: document.querySelector("#save-detail"),
-  url: document.querySelector("#product-url")
+  url: document.querySelector("#product-url"),
+  reservationList: document.querySelector("#reservation-list")
 };
 
 const id = new URLSearchParams(window.location.search).get("id");
@@ -43,7 +47,8 @@ function onStateChange() {
 
 function renderEquipment(equipment) {
   refs.name.textContent = equipment.name;
-  refs.meta.textContent = `${equipment.category} • Locatie: ${equipment.location} • Sync: ${getSyncMode()}`;
+  const borrowerText = equipment.borrowerName ? ` • Lener: ${equipment.borrowerName}` : "";
+  refs.meta.textContent = `${equipment.category} • Locatie: ${equipment.location}${borrowerText} • Sync: ${getSyncMode()}`;
   refs.statusBadge.textContent = equipment.status;
   refs.statusBadge.className = `badge ${equipment.status}`;
 
@@ -51,6 +56,9 @@ function renderEquipment(equipment) {
   refs.image.onerror = () => {
     refs.image.src = FALLBACK_IMAGE;
   };
+
+  refs.borrower.value = equipment.borrowerName || "";
+  renderReservations(equipment.reservations);
 }
 
 function renderLocationSelect(locations, selected) {
@@ -63,7 +71,7 @@ function renderLocationSelect(locations, selected) {
 
 function onActionChange() {
   const messages = {
-    none: "Je past alleen de locatie aan.",
+    none: "Je past alleen de locatie aan en kunt ook een naam invullen.",
     reserve: "Je reserveert dit product.",
     lend: "Je leent dit product nu uit.",
     return: "Je brengt dit product terug (status wordt beschikbaar)."
@@ -77,23 +85,94 @@ async function onSave() {
     return;
   }
 
+  const borrowerName = refs.borrower.value.trim();
   const updates = {
-    location: refs.location.value
+    location: refs.location.value,
+    borrowerName: refs.action.value === "lend" ? borrowerName : ""
   };
 
   if (refs.action.value === "reserve") {
     updates.status = "gereserveerd";
+    if (!borrowerName) {
+      refs.selection.textContent = "Vul je naam in voordat je dit product reserveert.";
+      return;
+    }
+
+    const startDate = refs.startDate.value;
+    const endDate = refs.endDate.value;
+    if (!startDate || !endDate) {
+      refs.selection.textContent = "Kies een start- en einddatum voor de reservering.";
+      return;
+    }
+
+    if (endDate < startDate) {
+      refs.selection.textContent = "De einddatum moet op of na de startdatum liggen.";
+      return;
+    }
+
+    const state = getState();
+    const equipment = state.equipments.find((item) => item.id === id);
+    const nextReservations = equipment ? [...equipment.reservations] : [];
+    const conflict = nextReservations.some((reservation) =>
+      datesOverlap(startDate, endDate, reservation.startDate, reservation.endDate)
+    );
+
+    if (conflict) {
+      refs.selection.textContent = "Deze datum overlapt met een bestaande reservering.";
+      return;
+    }
+
+    nextReservations.push({
+      name: borrowerName,
+      startDate,
+      endDate
+    });
+
+    updates.reservations = sortReservations(nextReservations);
   }
   if (refs.action.value === "lend") {
     updates.status = "uitgeleend";
+    if (!borrowerName) {
+      refs.selection.textContent = "Vul je naam in voordat je dit product leent.";
+      return;
+    }
   }
   if (refs.action.value === "return") {
     updates.status = "beschikbaar";
+    updates.borrowerName = "";
   }
 
   await updateEquipment(id, updates);
   refs.action.value = "none";
   refs.selection.textContent = "Wijzigingen opgeslagen.";
+  refs.startDate.value = "";
+  refs.endDate.value = "";
+}
+
+function renderReservations(reservations) {
+  if (!reservations.length) {
+    refs.reservationList.innerHTML = '<p class="reservation-empty">Geen reserveringen gepland.</p>';
+    return;
+  }
+
+  refs.reservationList.innerHTML = reservations
+    .map(
+      (reservation) => `
+        <article class="reservation-item">
+          <strong>${escapeHtml(reservation.name || "Onbekend")}</strong>
+          <span>${escapeHtml(reservation.startDate)} t/m ${escapeHtml(reservation.endDate)}</span>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function sortReservations(reservations) {
+  return [...reservations].sort((left, right) => left.startDate.localeCompare(right.startDate));
+}
+
+function datesOverlap(startA, endA, startB, endB) {
+  return startA <= endB && endA >= startB;
 }
 
 function escapeHtml(value) {
